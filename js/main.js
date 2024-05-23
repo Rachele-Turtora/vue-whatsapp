@@ -168,7 +168,9 @@ const { createApp } = Vue
         ],
         currentIndex: 0,
         newMessage: "",
-        searchedContacts: ""
+        searchedContacts: "",
+        messageIndex: null,
+        isVisible: false
       }
     },
 
@@ -198,6 +200,22 @@ const { createApp } = Vue
             } else {
                 return this.contacts;
             }
+        },
+
+        visibility(i){
+            if (this.messageIndex !== i){
+                this.messageIndex = i;
+            } else {
+                this.messageIndex = null;
+            }
+        },
+
+        deleteMessage(contactIndex, messageIndex){
+            this.contacts[contactIndex].messages = this.contacts[contactIndex].messages.filter((_, i) => {
+                return i !== messageIndex;
+            })
+
+            this.messageIndex = null;
         }
     }
   }).mount('#app')

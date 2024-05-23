@@ -102,6 +102,27 @@ img{
     position: absolute;
 }
 
+.menu.visible{
+    display: block;
+}
+
+.menu{
+    display: none;
+    width: 40%;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    position: absolute;
+    right: 5px;
+    top: 40px;
+    z-index: 2;
+}
+
+.menu p{
+    padding: 20px;
+    border: 1px solid gray;
+}
+
 .fa-angle-down{
     top: 25px;
     right: 10px;

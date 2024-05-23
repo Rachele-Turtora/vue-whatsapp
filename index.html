@@ -72,9 +72,14 @@
             </div>
             <ul class="messages">
                 <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
-                    <div class="box" v-for="message in contact.messages">
+                    <div class="box" v-for="(message, i) in contact.messages">
                         <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
-                            <i class="fas fa-angle-down"></i>
+                            <i class="fas fa-angle-down" @click="visibility(i)">
+                            </i>
+                            <div class="menu" :class="{visible: i == messageIndex}">
+                                <p>message info</p>
+                                <p @click="deleteMessage(index, i)">delete message</p>
+                            </div>
                             <p>{{ message.message }}</p>
                             <div class="time">{{ message.date }}</div>
                         </div>
