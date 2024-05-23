@@ -1,0 +1,158 @@
+@media screen and (min-width: 576px){
+
+    .col-left{
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
+    .col-right{
+        flex-grow: 1;
+    }
+
+    .me{
+        width: 100%;
+        background-color: #eaeaea;
+        border-right: 1px solid var(--gray);
+    }
+
+    .friends{
+        width: 100%;
+        overflow-y: auto;
+    }
+
+    .info .icons{
+        padding-right: 15px;
+    }
+
+    .icons{
+        display: flex;
+        align-items: center;
+    }
+
+    .icons i{
+        font-size: 25px;
+        color: var(--gray);
+        padding: 0 10px;
+    }
+
+    .col-right .text input{
+        margin: 0;
+    }
+
+    .text{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .text i{
+        display: block;
+        font-size: 30px;
+        color: #6b7376;
+    }
+
+    .notifications,
+    .search,
+    .friend .content,
+    .me .icons{
+        display: none;
+    }
+}
+
+
+@media screen and (min-width: 992px){
+
+    body{
+        background: var(--bg-color);
+    }
+
+    .container{
+        max-width: 1600px;
+        height: 90%;
+        margin: auto;
+    }
+
+    .col-left{
+        width: 400px;
+    }
+
+    .me{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .me .icons{
+        display: flex;
+        padding-right: 15px;
+    }
+
+    .notifications{
+        display: flex;
+        width: 100%;
+        background-color: var(--notifications-color);
+        align-items: center;
+    }
+
+    .fa-bell-slash{
+        font-size: 25px;
+        padding: 15px;
+        background-color: white;
+        color: var(--notifications-color);
+        border-radius: 50%;
+        margin: 20px;
+    }
+
+    .new-notification .enable{
+        font-size: 16px;
+        color: var(--darkgray);
+        text-decoration: underline;
+    }
+
+    .search{
+        display: flex;
+        width: 100%;
+        height: 100px;
+        background-color: rgb(243, 243, 243);
+    }
+
+    .search input{
+        width: 75%;
+        height: 70%;
+        margin: auto;
+        border: none;
+    }
+
+    .search .icons{
+        padding: 15px;
+    }
+
+    .friend .content{
+        display: block;
+    }
+
+    .friend{
+        background-color: white;
+        display: flex;
+        align-items: center;
+        border-bottom: 0.5px solid rgb(230, 230, 230);
+        position:relative;
+    }
+
+    .friend:hover{
+        background-color: rgb(230, 230, 230);
+    }
+
+    .last-access{
+        position: absolute;
+        top: 25px;
+        right: 25px;
+    }
+
+    .stato, 
+    .last-access{
+        color: var(--gray);
+        font-size: 15px;
+    }
+}

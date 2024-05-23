@@ -1,0 +1,6 @@
+:root{
+    --bg-color: linear-gradient(to bottom, #029688 0%, #029688 20%, #dadbd4 20%, #dadbd4 100%);
+    --gray: #b1b1b1;
+    --darkgray: #7e7e7e;
+    --notifications-color: #8fdafc;
+}
