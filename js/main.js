@@ -166,7 +166,27 @@ const { createApp } = Vue
                 ],
             }
         ],
-        currentIndex: 0
+        currentIndex: 0,
+        newMessage: ""
       }
+    },
+
+    methods: {
+        addMessage(i){
+            this.contacts[i].messages.push({
+                date: '10/01/2020',
+                message: this.newMessage,
+                status: 'sent'
+            })
+            this.newMessage = "";
+
+            setTimeout(() => {
+                this.contacts[i].messages.push({
+                    date: '10/01/2020',
+                    message: 'ciao',
+                    status: 'received'
+                })
+            }, 1000)
+        }
     }
   }).mount('#app')
