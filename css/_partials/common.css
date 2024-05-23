@@ -47,7 +47,7 @@ img{
 .messages{
     width: 100%;
     height: calc(100% - 180px);
-    background-image: url("../../assets/img/mine.jpg");
+    background-image: url("../../img/mine.jpg");
     padding-top: 30px;
     overflow-y: auto;
 }
@@ -75,7 +75,7 @@ img{
 .message{
     border-radius: 15px;
     padding: 20px;
-    width: 40%;
+    width: 50%;
     margin-top: 10px;
     position: relative;
 }
@@ -92,7 +92,8 @@ img{
 
 .white{
     background-color: white;
-    margin-right: 500px;
+    margin-right: auto;
+    margin-left: 30px;
 }
 
 .fa-angle-down,
