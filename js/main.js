@@ -167,7 +167,8 @@ const { createApp } = Vue
             }
         ],
         currentIndex: 0,
-        newMessage: ""
+        newMessage: "",
+        searchedContacts: ""
       }
     },
 
@@ -187,6 +188,16 @@ const { createApp } = Vue
                     status: 'received'
                 })
             }, 1000)
+        },
+
+        searchContacts(){
+            if (this.searchedContacts){
+                return this.contacts.filter((element) => {
+                    return element.name.toLowerCase().includes(this.searchedContacts.toLowerCase())
+                })
+            } else {
+                return this.contacts;
+            }
         }
     }
   }).mount('#app')

@@ -36,16 +36,16 @@
                 <div class="icons">
                     <i class="fab fa-searchengin"></i>
                 </div>
-                <input type="text" placeholder="Cerca o inizia una nuova chat">
+                <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts">
             </div>
             <ul class="friends">
-                <li v-for="(contact, index) in contacts" @click="currentIndex = index">
+                <li v-for="(contact, index) in searchContacts()" @click="currentIndex = index">
                     <div class="friend">
                         <div class="img">
                             <img :src="contact.avatar" alt="avatar">
                         </div>
                         <div class="content">
-                            <p class="name"> {{ contacts.name }}</p>
+                            <p class="name"> {{ contact.name }}</p>
                             <p class="stato">Lorem ipsum dolor sit amet</p>
                             <div class="last-access">16:15</div>
                         </div>
