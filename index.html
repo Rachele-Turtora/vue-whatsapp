@@ -39,7 +39,7 @@
                 <input type="text" placeholder="Cerca o inizia una nuova chat">
             </div>
             <ul class="friends">
-                <li v-for="contact in contacts">
+                <li v-for="(contact, index) in contacts" @click="currentIndex = index">
                     <div class="friend">
                         <div class="img">
                             <img :src="contact.avatar" alt="avatar">
@@ -71,20 +71,13 @@
                 </div>
             </div>
             <ul class="messages">
-                <li>
-                    <div class="box">
-                        <div class="green message">
+                <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
+                    <div class="box" v-for="message in contact.messages">
+                        <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
                             <i class="fas fa-angle-down"></i>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequuntur tempore magnam quasi vel voluptatum ex perferendis aliquid a voluptate, reiciendis possimus earum unde dolore natus provident quos odio non!</p>
-                            <div class="time">16:13</div>
+                            <p>{{ message.message }}</p>
+                            <div class="time">{{ message.date }}</div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="white message">
-                        <i class="fas fa-angle-down"></i>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequuntur tempore magnam quasi vel voluptatum ex perferendis aliquid a voluptate, reiciendis possimus earum unde dolore natus provident quos odio non!</p>
-                        <div class="time">16:15</div>
                     </div>
                 </li>
             </ul>
