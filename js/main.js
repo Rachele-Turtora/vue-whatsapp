@@ -196,12 +196,15 @@ const { createApp } = Vue
         },
 
         searchContacts(){
-            if (this.searchedContacts){
+            console.log(this.searchedContacts.length)
+            if (this.searchedContacts.length !== 0){
                 this.contacts.forEach((element) => {
                     element.visible = element.name.toLowerCase().includes(this.searchedContacts.toLowerCase())
                 })
             } else {
-                return this.contacts;
+                this.contacts.forEach((element) => {
+                    element.visible = true;
+                });
             }
         },
 
