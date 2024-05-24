@@ -8,8 +8,12 @@ body{
     display: flex;
 }
 
-.col-right{
+.col-right.display-right{
     display: flex;
+}
+
+.col-right{
+    display: none;
     flex-wrap: wrap;
 }
 
@@ -142,6 +146,10 @@ input{
     font-size: 12px;
 }
 
+.col-left.display-left{
+    display: flex;
+}
+
 .col-left,
 .text i{
     display: none;
@@ -224,6 +232,7 @@ input{
     align-items: center;
     border-bottom: 0.5px solid rgb(230, 230, 230);
     position:relative;
+    overflow-y: auto;
 }
 
 .friend:hover{

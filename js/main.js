@@ -170,13 +170,14 @@ const { createApp } = Vue
         newMessage: "",
         searchedContacts: "",
         messageIndex: null,
-        isVisible: false
+        isVisible: false,
+        displayLeft: true,
+        displayRight: false
       }
     },
 
     methods: {
         addMessage(i){
-
             const time = luxon.DateTime.now().setLocale('it').toFormat('TT')
             if (this.newMessage){
                 this.contacts[i].messages.push({
@@ -225,6 +226,17 @@ const { createApp } = Vue
             })
 
             this.messageIndex = null;
+        },
+
+        handleClick(i){
+            this.currentIndex = i;
+            
+            if (window.innerWidth <= 576){
+                if (this.displayLeft == true){
+                    this.displayLeft = false;
+                    this.displayRight = true
+                }
+            }
         }
     }
   }).mount('#app')
