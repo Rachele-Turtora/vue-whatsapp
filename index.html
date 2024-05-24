@@ -46,7 +46,8 @@
                         </div>
                         <div class="content">
                             <p class="name"> {{ contact.name }}</p>
-                            <p class="stato">Lorem ipsum dolor sit amet</p>
+                            <p class="stato" v-if="contact.messages.length !== 0"> {{ contact.messages[contact.messages.length - 1].message}} </p> 
+                            <p class="stato" v-else="contact.messages.length == 0"> Nessun messaggio </p> 
                             <div class="last-access">16:15</div>
                         </div>
                     </div>
@@ -57,10 +58,10 @@
             <div class="info">
                 <div class="info-left">
                     <div class="img">
-                        <img src="./img/avatar_1.jpg" alt="avatar">
+                        <img :src="contacts[currentIndex].avatar" alt="avatar">
                     </div>
                     <div class="content">
-                        <p class="name">Michele</p>
+                        <p class="name"> {{contacts[currentIndex].name}} </p>
                         <p class="access">Ultimo accesso oggi alle 16.26</p>
                     </div>
                 </div>

@@ -5,16 +5,17 @@
         flex-direction: column;
         flex-shrink: 0;
         overflow: hidden;
+        width: 110px;
+    }
+
+    .col-left,
+    .text i{
+        flex-grow: 0;
     }
 
     .col-right{
+        display: block;
         flex-grow: 1;
-    }
-
-    .me{
-        width: 100%;
-        background-color: #eaeaea;
-        border-right: 1px solid var(--gray);
     }
 
     .friends{
