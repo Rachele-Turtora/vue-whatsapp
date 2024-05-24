@@ -36,10 +36,10 @@
                 <div class="icons">
                     <i class="fab fa-searchengin"></i>
                 </div>
-                <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts">
+                <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts" @input="searchContacts()">
             </div>
             <ul class="friends">
-                <li v-for="(contact, index) in searchContacts()" @click="currentIndex = index">
+                <li v-for="(contact, index) in contacts" @click="currentIndex = index" v-show="contact.visible">
                     <div class="friend">
                         <div class="img">
                             <img :src="contact.avatar" alt="avatar">
@@ -95,6 +95,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js" integrity="sha512-dUlSLLkxslGILhPdCkALwk4szPhp3xmZIKFtlUD+O9Lslq41Aksmdt5OGqpomDoT4FsCUH70jQU8ezZHI3v1RQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
 </body>

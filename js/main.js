@@ -176,26 +176,29 @@ const { createApp } = Vue
 
     methods: {
         addMessage(i){
-            this.contacts[i].messages.push({
-                date: '10/01/2020',
-                message: this.newMessage,
-                status: 'sent'
-            })
-            this.newMessage = "";
-
-            setTimeout(() => {
+            if (this.newMessage){
                 this.contacts[i].messages.push({
                     date: '10/01/2020',
-                    message: 'ciao',
-                    status: 'received'
+                    message: this.newMessage,
+                    status: 'sent'
                 })
-            }, 1000)
+                this.newMessage = "";
+                console.log(luxon.DateTime.now().setLocale('it').toFormat('T'));
+    
+                setTimeout(() => {
+                    this.contacts[i].messages.push({
+                        date: '10/01/2020',
+                        message: 'ciao',
+                        status: 'received'
+                    })
+                }, 1000)
+            }
         },
 
         searchContacts(){
             if (this.searchedContacts){
-                return this.contacts.filter((element) => {
-                    return element.name.toLowerCase().includes(this.searchedContacts.toLowerCase())
+                this.contacts.forEach((element) => {
+                    element.visible = element.name.toLowerCase().includes(this.searchedContacts.toLowerCase())
                 })
             } else {
                 return this.contacts;
