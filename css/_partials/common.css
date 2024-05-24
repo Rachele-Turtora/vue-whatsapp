@@ -59,6 +59,10 @@ img{
     display: flex;
 }
 
+input{
+    font-size: 22px;
+}
+
 .col-right .text input{
     width: 80%;
     height: 80%;
@@ -121,6 +125,10 @@ img{
 .menu p{
     padding: 20px;
     border: 1px solid gray;
+}
+
+.menu p:hover{
+    background-color: lightgray;
 }
 
 .fa-angle-down{

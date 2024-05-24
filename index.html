@@ -39,7 +39,7 @@
                 <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts" @input="searchContacts()">
             </div>
             <ul class="friends">
-                <li v-for="(contact, index) in contacts" @click="currentIndex = index" v-show="contact.visible">
+                <li v-for="(contact, index) in searchContacts()" @click="currentIndex = index" v-show="contact.visible">
                     <div class="friend">
                         <div class="img">
                             <img :src="contact.avatar" alt="avatar">
@@ -47,8 +47,8 @@
                         <div class="content">
                             <p class="name"> {{ contact.name }}</p>
                             <p class="stato" v-if="contact.messages.length !== 0"> {{ contact.messages[contact.messages.length - 1].message}} </p> 
-                            <p class="stato" v-else="contact.messages.length == 0"> Nessun messaggio </p> 
-                            <div class="last-access">16:15</div>
+                            <div class="last-access" v-if="contact.messages.length !== 0 && contacts[index].messages[contact.messages.length - 1].date.length > 8"> {{contact.messages[contact.messages.length - 1].date.split(" ")[1]}} </div>
+                            <div class="last-access" v-else-if="contact.messages.length !== 0 && contacts[index].messages[contact.messages.length - 1].date.length === 8"> {{contact.messages[contact.messages.length - 1].date}} </div>
                         </div>
                     </div>
                 </li>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="content">
                         <p class="name"> {{contacts[currentIndex].name}} </p>
-                        <p class="access">Ultimo accesso oggi alle 16.26</p>
+                        <p class="access">Online</p>
                     </div>
                 </div>
                 <div class="icons">
@@ -82,7 +82,8 @@
                                 <p @click="deleteMessage(index, i)">delete message</p>
                             </div>
                             <p>{{ message.message }}</p>
-                            <div class="time">{{ message.date }}</div>
+                            <div class="time" v-if="contacts[index].messages[i].date.length > 8">{{ message.date.split(" ")[1] }}</div>
+                            <div class="time" v-else="contacts[index].messages[i].date.length = 8">{{ message.date }}</div>
                         </div>
                     </div>
                 </li>
