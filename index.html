@@ -11,7 +11,7 @@
     <title>Boolzapp</title>
 </head>
 <body>
-    <div id="app" class="container">
+    <div id="app" class="container" v-cloak>
         <div class="col-left" :class="{'col-left display-left': displayLeft}">
             <div class="me">
                 <div class="img">
@@ -66,6 +66,7 @@
                     </div>
                 </div>
                 <div class="icons">
+                    <i class="fas fa-angle-left" @click="handleClick()"></i>
                     <i class="fab fa-searchengin"></i>
                     <i class="fas fa-paperclip"></i>
                     <i class="fa-solid fa-ellipsis-vertical"></i>

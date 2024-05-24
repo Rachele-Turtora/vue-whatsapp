@@ -229,12 +229,17 @@ const { createApp } = Vue
         },
 
         handleClick(i){
-            this.currentIndex = i;
+            if(i){
+                this.currentIndex = i;
+            }
             
             if (window.innerWidth <= 576){
                 if (this.displayLeft == true){
                     this.displayLeft = false;
-                    this.displayRight = true
+                    this.displayRight = true;
+                } else {
+                    this.displayLeft = true;
+                    this.displayRight = false;
                 }
             }
         }

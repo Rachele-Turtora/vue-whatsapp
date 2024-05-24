@@ -38,6 +38,10 @@
         padding: 0 10px;
     }
 
+    .icons .fa-angle-left{
+        display: none;
+    }
+
     .col-right .text input{
         margin: 0;
     }
