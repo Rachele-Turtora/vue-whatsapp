@@ -229,7 +229,7 @@ const { createApp } = Vue
         },
 
         handleClick(i){
-            if(i){
+            if(i >= 0){
                 this.currentIndex = i;
             }
             

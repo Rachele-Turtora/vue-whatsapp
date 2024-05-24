@@ -11,88 +11,90 @@
     <title>Boolzapp</title>
 </head>
 <body>
-    <div id="app" class="container" v-cloak>
-        <div class="col-left" :class="{'col-left display-left': displayLeft}">
-            <div class="me">
-                <div class="img">
-                    <img src="./img/avatar_io.jpg" alt="avatar">
+    <div id="app" v-cloak>
+        <div class="container">
+            <div class="col-left" :class="{'col-left display-left': displayLeft}">
+                <div class="me">
+                    <div class="img">
+                        <img src="./img/avatar_io.jpg" alt="avatar">
+                    </div>
+                    <div class="icons">
+                        <i class="fas fa-circle-notch"></i>
+                        <i class="fas fa-message"></i>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
                 </div>
-                <div class="icons">
-                    <i class="fas fa-circle-notch"></i>
-                    <i class="fas fa-message"></i>
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                <div class="notifications">
+                    <div class="bell">
+                        <i class="fas fa-bell-slash"></i>
+                    </div>
+                    <div class="new-notification">
+                        <p class="get">Ricevi notifiche di nuovi messaggi</p>
+                        <p class="enable">Attiva notifiche desktop</p>
+                    </div>
                 </div>
+                <div class="search">
+                    <div class="icons">
+                        <i class="fab fa-searchengin"></i>
+                    </div>
+                    <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts" @input="searchContacts()">
+                </div>
+                <ul class="friends">
+                    <li v-for="(contact, index) in searchContacts()" @click="handleClick(index)" v-show="contact.visible" >
+                        <div class="friend">
+                            <div class="img">
+                                <img :src="contact.avatar" alt="avatar">
+                            </div>
+                            <div class="content">
+                                <p class="name"> {{ contact.name }}</p>
+                                <p class="stato" v-if="contact.messages.length !== 0"> {{ contact.messages[contact.messages.length - 1].message}} </p> 
+                                <div class="last-access" v-if="contact.messages.length !== 0 && contacts[index].messages[contact.messages.length - 1].date.length > 8"> {{contact.messages[contact.messages.length - 1].date.split(" ")[1]}} </div>
+                                <div class="last-access" v-else-if="contact.messages.length !== 0 && contacts[index].messages[contact.messages.length - 1].date.length === 8"> {{contact.messages[contact.messages.length - 1].date}} </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="notifications">
-                <div class="bell">
-                    <i class="fas fa-bell-slash"></i>
-                </div>
-                <div class="new-notification">
-                    <p class="get">Ricevi notifiche di nuovi messaggi</p>
-                    <p class="enable">Attiva notifiche desktop</p>
-                </div>
-            </div>
-            <div class="search">
-                <div class="icons">
-                    <i class="fab fa-searchengin"></i>
-                </div>
-                <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts" @input="searchContacts()">
-            </div>
-            <ul class="friends">
-                <li v-for="(contact, index) in searchContacts()" @click="handleClick(index)" v-show="contact.visible" >
-                    <div class="friend">
+            <div class="col-right" :class="{'col-right display-right': displayRight}">
+                <div class="info">
+                    <div class="info-left">
                         <div class="img">
-                            <img :src="contact.avatar" alt="avatar">
+                            <img :src="contacts[currentIndex].avatar" alt="avatar">
                         </div>
                         <div class="content">
-                            <p class="name"> {{ contact.name }}</p>
-                            <p class="stato" v-if="contact.messages.length !== 0"> {{ contact.messages[contact.messages.length - 1].message}} </p> 
-                            <div class="last-access" v-if="contact.messages.length !== 0 && contacts[index].messages[contact.messages.length - 1].date.length > 8"> {{contact.messages[contact.messages.length - 1].date.split(" ")[1]}} </div>
-                            <div class="last-access" v-else-if="contact.messages.length !== 0 && contacts[index].messages[contact.messages.length - 1].date.length === 8"> {{contact.messages[contact.messages.length - 1].date}} </div>
+                            <p class="name"> {{contacts[currentIndex].name}} </p>
+                            <p class="access">Online</p>
                         </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-        <div class="col-right" :class="{'col-right display-right': displayRight}">
-            <div class="info">
-                <div class="info-left">
-                    <div class="img">
-                        <img :src="contacts[currentIndex].avatar" alt="avatar">
-                    </div>
-                    <div class="content">
-                        <p class="name"> {{contacts[currentIndex].name}} </p>
-                        <p class="access">Online</p>
+                    <div class="icons">
+                        <i class="fas fa-angle-left" @click="handleClick()"></i>
+                        <i class="fab fa-searchengin"></i>
+                        <i class="fas fa-paperclip"></i>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
                     </div>
                 </div>
-                <div class="icons">
-                    <i class="fas fa-angle-left" @click="handleClick()"></i>
-                    <i class="fab fa-searchengin"></i>
-                    <i class="fas fa-paperclip"></i>
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </div>
-            </div>
-            <ul class="messages">
-                <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
-                    <div class="box" v-for="(message, i) in contact.messages">
-                        <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
-                            <i class="fas fa-angle-down" @click="visibility(i)">
-                            </i>
-                            <div class="menu" :class="{visible: i == messageIndex}">
-                                <p>message info</p>
-                                <p @click="deleteMessage(index, i)">delete message</p>
+                <ul class="messages">
+                    <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
+                        <div class="box" v-for="(message, i) in contact.messages">
+                            <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
+                                <i class="fas fa-angle-down" @click="visibility(i)">
+                                </i>
+                                <div class="menu" :class="{visible: i == messageIndex}">
+                                    <p>message info</p>
+                                    <p @click="deleteMessage(index, i)">delete message</p>
+                                </div>
+                                <p>{{ message.message }}</p>
+                                <div class="time" v-if="contacts[index].messages[i].date.length > 8">{{ message.date.split(" ")[1] }}</div>
+                                <div class="time" v-else="contacts[index].messages[i].date.length = 8">{{ message.date }}</div>
                             </div>
-                            <p>{{ message.message }}</p>
-                            <div class="time" v-if="contacts[index].messages[i].date.length > 8">{{ message.date.split(" ")[1] }}</div>
-                            <div class="time" v-else="contacts[index].messages[i].date.length = 8">{{ message.date }}</div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-            <div class="text">
-                <i class="fa-regular fa-face-smile"></i>
-                <input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter="addMessage(currentIndex)">
-                <i class="fas fa-microphone"></i>
+                    </li>
+                </ul>
+                <div class="text">
+                    <i class="fa-regular fa-face-smile"></i>
+                    <input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter="addMessage(currentIndex)">
+                    <i class="fas fa-microphone"></i>
+                </div>
             </div>
         </div>
     </div>

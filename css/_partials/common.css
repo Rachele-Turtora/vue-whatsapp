@@ -1,4 +1,4 @@
-body{
+#app{
     height: 100vh;
     display: flex;
 }
@@ -222,6 +222,10 @@ input{
     padding: 15px;
 }
 
+.friends{
+    overflow-y: auto;
+}
+
 .friend .content{
     display: block;
 }
@@ -232,7 +236,6 @@ input{
     align-items: center;
     border-bottom: 0.5px solid rgb(230, 230, 230);
     position:relative;
-    overflow-y: auto;
 }
 
 .friend:hover{
