@@ -172,7 +172,8 @@ const { createApp } = Vue
         messageIndex: null,
         isVisible: false,
         displayLeft: true,
-        displayRight: false
+        displayRight: false,
+        answers: ["Ciao", "Tutto bene, grazie", "Non capisco...", "Purtroppo, al momento non posso rispondere a questa domanda.", "Mi dispiace, non ho capito la tua domanda. Potresti riformularla?", "Eccomi, pronto ad aiutarti! Cosa desideri sapere?"]
       }
     },
 
@@ -188,9 +189,12 @@ const { createApp } = Vue
                 this.newMessage = "";
     
                 setTimeout(() => {
+
+                    const num = Math.floor(Math.random() * 6);
+
                     this.contacts[i].messages.push({
                         date: time,
-                        message: 'ciao',
+                        message: this.answers[num],
                         status: 'received'
                     })
                 }, 1000)
