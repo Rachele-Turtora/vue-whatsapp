@@ -70,16 +70,18 @@
                     </div>
                     <div class="icons">
                         <i class="fas fa-angle-left" @click="handleClick()"></i>
-                        <i class="fab fa-searchengin"></i>
+                        <i class="fab fa-searchengin" @click="toggleSearchIcon()"></i>
+                        <input type="text" placeholder="Cerca un messaggio" class="input-message" :class="{visible: searchIcon}" v-model="searchedMessage" @input="searchMessage()">
                         <i class="fas fa-paperclip"></i>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </div>
                 </div>
                 <ul class="messages">
                     <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
-                        <div class="box" v-for="(message, i) in contact.messages">
+                        <div class="box" v-for="(message, i) in searchMessage(index)">
                             <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
-                                <i class="fas fa-angle-down" @click="visibility(i)">
+                                <i class="fas fa-angle-down" 
+                                @click="visibility(i)">
                                 </i>
                                 <div class="menu" :class="{visible: i == messageIndex}">
                                     <p>message info</p>

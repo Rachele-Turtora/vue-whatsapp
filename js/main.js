@@ -175,7 +175,9 @@ const { createApp } = Vue
         displayRight: false,
         answers: ["Ciao", "Tutto bene, grazie", "Non capisco...", "Purtroppo, al momento non posso rispondere a questa domanda.", "Mi dispiace, non ho capito la tua domanda. Potresti riformularla?", "Eccomi, pronto ad aiutarti! Cosa desideri sapere?"],
         isTyping: false,
-        timeoutTyping: null
+        timeoutTyping: null,
+        searchIcon: false,
+        searchedMessage: ""
       }
     },
 
@@ -221,6 +223,20 @@ const { createApp } = Vue
             
         },
 
+        searchMessage(i){
+            if (!this.contacts[i]) {
+                return [];
+            }
+
+            if(this.searchedMessage){
+                return this.contacts[i].messages.filter((element) => {
+                    return element.message.toLowerCase().includes(this.searchedMessage.toLowerCase());
+                });
+            } else {
+                return this.contacts[i].messages;
+            }
+        },
+
         visibility(i){
             if (this.messageIndex !== i){
                 this.messageIndex = i;
@@ -240,6 +256,9 @@ const { createApp } = Vue
         handleClick(i){
             if(i >= 0){
                 this.currentIndex = i;
+                this.messageIndex = null;
+                this.searchedMessage = "";
+                this.searchIcon = false
             }
             
             if (window.innerWidth <= 576){
@@ -261,6 +280,10 @@ const { createApp } = Vue
             this.timeoutTyping = setTimeout(function(){
                 this.isTyping = false;
             }, 1000);
+        },
+
+        toggleSearchIcon(){
+            this.searchIcon = ! this.searchIcon
         }
     }
   }).mount('#app')

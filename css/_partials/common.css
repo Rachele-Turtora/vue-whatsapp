@@ -29,6 +29,17 @@
     align-items: center;
 }
 
+.input-message.visible{
+    display: block;
+}
+
+.input-message{
+    display: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 .img{
     width: 60px;
     height: 60px;
