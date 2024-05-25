@@ -173,7 +173,9 @@ const { createApp } = Vue
         isVisible: false,
         displayLeft: true,
         displayRight: false,
-        answers: ["Ciao", "Tutto bene, grazie", "Non capisco...", "Purtroppo, al momento non posso rispondere a questa domanda.", "Mi dispiace, non ho capito la tua domanda. Potresti riformularla?", "Eccomi, pronto ad aiutarti! Cosa desideri sapere?"]
+        answers: ["Ciao", "Tutto bene, grazie", "Non capisco...", "Purtroppo, al momento non posso rispondere a questa domanda.", "Mi dispiace, non ho capito la tua domanda. Potresti riformularla?", "Eccomi, pronto ad aiutarti! Cosa desideri sapere?"],
+        isTyping: false,
+        timeoutTyping: null
       }
     },
 
@@ -197,7 +199,10 @@ const { createApp } = Vue
                         message: this.answers[num],
                         status: 'received'
                     })
-                }, 1000)
+                }, 1000);
+
+                this.isTyping = false;
+                clearTimeout(this.timeoutTyping);
             }
         },
 
@@ -246,6 +251,16 @@ const { createApp } = Vue
                     this.displayRight = false;
                 }
             }
+        },
+
+        typing(){
+            if(!this.isTyping){
+                this.isTyping = true;
+            }
+
+            this.timeoutTyping = setTimeout(function(){
+                this.isTyping = false;
+            }, 1000);
         }
     }
   }).mount('#app')

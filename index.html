@@ -40,7 +40,8 @@
                     <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts" @input="searchContacts()">
                 </div>
                 <ul class="friends">
-                    <li v-for="(contact, index) in searchContacts()" @click="handleClick(index)" v-show="contact.visible" >
+                    <li v-for="(contact, index) in searchContacts()" @click="handleClick(index)" 
+                    v-show="contact.visible" >
                         <div class="friend">
                             <div class="img">
                                 <img :src="contact.avatar" alt="avatar">
@@ -63,7 +64,8 @@
                         </div>
                         <div class="content">
                             <p class="name"> {{contacts[currentIndex].name}} </p>
-                            <p class="access">Online</p>
+                            <p class="access" v-if="isTyping">Sta scrivendo...</p>
+                            <p class="access" v-else="!isTyping">Online</p>
                         </div>
                     </div>
                     <div class="icons">
@@ -92,7 +94,11 @@
                 </ul>
                 <div class="text">
                     <i class="fa-regular fa-face-smile"></i>
-                    <input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter="addMessage(currentIndex)">
+                    <input type="text" 
+                    placeholder="Scrivi un messaggio" 
+                    v-model="newMessage" 
+                    @keyup.enter="addMessage(currentIndex)" 
+                    @input="typing()">
                     <i class="fas fa-microphone"></i>
                 </div>
             </div>
