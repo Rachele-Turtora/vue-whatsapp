@@ -192,6 +192,10 @@ const { createApp } = Vue
                     status: 'sent'
                 })
                 this.newMessage = "";
+
+                this.$nextTick(() => {      // "this.$nextTick" assicura che il metodo scrollToBottom() venga eseguito solo dopo che il DOM è stato aggiornato con il nuovo messaggio
+                    this.scrollToBottom();
+                })
     
                 setTimeout(() => {
 
@@ -201,6 +205,10 @@ const { createApp } = Vue
                         date: time,
                         message: this.answers[num],
                         status: 'received'
+                    })
+
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
                     })
                 }, 1000);
 
@@ -296,6 +304,11 @@ const { createApp } = Vue
             this.contacts = this.contacts.filter((_, i) => {
                 return i !== index;
             })  
+        },
+
+        scrollToBottom(){
+            const container = this.$refs.messagesContainer;     // "$refs" contiene le referenze a elementi DOM o componenti figlio che hanno un attributo ref; è utile per accedere direttamente a elementi specifici nel DOM
+            container.scrollTop = container.scrollHeight;
         }
     }
   }).mount('#app')

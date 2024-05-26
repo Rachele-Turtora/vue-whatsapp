@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <ul class="messages">
+                <ul class="messages" ref="messagesContainer">
                     <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
                         <div class="box" v-for="(message, i) in searchMessage(index)">
                             <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
