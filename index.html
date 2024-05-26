@@ -73,7 +73,10 @@
                         <i class="fab fa-searchengin" @click="toggleSearchIcon()"></i>
                         <input type="text" placeholder="Cerca un messaggio" class="input-message" :class="{visible: searchIcon}" v-model="searchedMessage" @input="searchMessage()">
                         <i class="fas fa-paperclip"></i>
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                        <i class="fa-solid fa-ellipsis-vertical" @click="toggleRemoveChat()"></i>
+                        <div class="remove-chat" :class="{visible: removeChat}">
+                            <p @click="removeThisChat(currentIndex)">Cancella chat</p>
+                        </div>
                     </div>
                 </div>
                 <ul class="messages">

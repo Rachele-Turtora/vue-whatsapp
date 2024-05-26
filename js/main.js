@@ -177,7 +177,8 @@ const { createApp } = Vue
         isTyping: false,
         timeoutTyping: null,
         searchIcon: false,
-        searchedMessage: ""
+        searchedMessage: "",
+        removeChat: false
       }
     },
 
@@ -258,7 +259,8 @@ const { createApp } = Vue
                 this.currentIndex = i;
                 this.messageIndex = null;
                 this.searchedMessage = "";
-                this.searchIcon = false
+                this.searchIcon = false;
+                this.removeChat = false
             }
             
             if (window.innerWidth <= 576){
@@ -283,7 +285,17 @@ const { createApp } = Vue
         },
 
         toggleSearchIcon(){
-            this.searchIcon = ! this.searchIcon
+            this.searchIcon = !this.searchIcon
+        },
+
+        toggleRemoveChat(){
+            this.removeChat = !this.removeChat
+        },
+
+        removeThisChat(index){
+            this.contacts = this.contacts.filter((_, i) => {
+                return i !== index;
+            })  
         }
     }
   }).mount('#app')
