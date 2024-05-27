@@ -247,7 +247,7 @@ const contacts = [
 
         typing(){
             this.isTyping = true;
-            
+
             if (this.timeoutTyping) {
                 clearTimeout(this.timeoutTyping);
             }
@@ -303,24 +303,25 @@ const contacts = [
         },
 
         removeThisChat(index){
-            if (index == this.contacts.length - 1){
+            if (this.contacts.length == 1){
+                this.currentIndex = -1
+                this.contacts = []
+            } else if (index == this.contacts.length - 1){
                 this.contacts = this.contacts.filter((_, i) => {
                     return i !== index;
-                })  
+                })
                 this.currentIndex -= 1;
-            } else if (this.contacts.length == 1){
-                console.log(this.contacts)
-                this.contacts = []
-                this.currentIndex = -1;
             } else {
                 this.contacts = this.contacts.filter((_, i) => {
                     return i !== index;
                 })
             } 
+            
+            this.toggleRemoveChat()
         },
 
         // Toggle functions
-        toggleSearchIcon(){
+        toggleSearchMessage(){
             this.searchIcon = !this.searchIcon
         },
 
