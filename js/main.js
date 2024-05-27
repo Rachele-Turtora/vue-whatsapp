@@ -209,40 +209,44 @@ const contacts = [
         },
 
         // Send new message
-        addMessage(i){
+        handleNewMessage(i){
             const time = luxon.DateTime.now().setLocale('it').toFormat('TT')
-            if (this.newMessage){
-                this.contacts[i].messages.push({
-                    date: time,
-                    message: this.newMessage,
-                    status: 'sent'
-                })
+            if (this.newMessage){    
+
+                this.addMessage(i, time);
                 this.newMessage = "";
 
-                this.$nextTick(() => {      // "this.$nextTick" assicura che il metodo scrollToBottom() venga eseguito solo dopo che il DOM è stato aggiornato con il nuovo messaggio
-                    this.scrollToBottom();
-                })
+                this.$nextTick(this.scrollToBottom); // "this.$nextTick" assicura che il metodo scrollToBottom() venga eseguito solo dopo che il DOM è stato aggiornato con il nuovo messaggio
     
-                this.typing()
+                this.typing();
 
                 setTimeout(() => {
 
                     const num = Math.floor(Math.random() * 6);
+                    this.receiveMessage(i, time, num);
 
-                    this.contacts[i].messages.push({
-                        date: time,
-                        message: this.answers[num],
-                        status: 'received'
-                    })
-
-                    this.$nextTick(() => {
-                        this.scrollToBottom();
-                    })
+                    this.$nextTick(this.scrollToBottom);
 
                     this.isTyping = false;
                 }, 1000);
                 
             }
+        },
+
+        addMessage(i, time){
+            return this.contacts[i].messages.push({
+                date: time,
+                message: this.newMessage,
+                status: 'sent'
+            })
+        },
+
+        receiveMessage(i, time, num){
+            return this.contacts[i].messages.push({
+                date: time,
+                message: this.answers[num],
+                status: 'received'
+            })
         },
 
         typing(){

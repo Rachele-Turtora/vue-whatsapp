@@ -126,7 +126,7 @@
                     <input type="text" 
                     placeholder="Scrivi un messaggio" 
                     v-model="newMessage" 
-                    @keyup.enter="addMessage(currentIndex)">
+                    @keyup.enter="handleNewMessage(currentIndex)">
                     <i class="fas fa-microphone"></i>
                 </div>
             </div>
