@@ -33,12 +33,16 @@
                         <p class="enable">Attiva notifiche desktop</p>
                     </div>
                 </div>
+
+                <!-- Search Contacts -->
                 <div class="search">
                     <div class="icons">
                         <i class="fab fa-searchengin"></i>
                     </div>
                     <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="searchedContacts" @input="searchContacts()">
                 </div>
+
+                <!-- Contacts List -->
                 <ul class="friends">
                     <li v-for="(contact, index) in searchContacts()" @click="handleClick(index)" 
                     v-show="contact.visible" >
@@ -57,6 +61,8 @@
                 </ul>
             </div>
             <div class="col-right" :class="{'col-right display-right': displayRight}">
+
+                <!-- Contact Info -->
                 <div class="info">
                     <div class="info-left">
                         <div class="img">
@@ -70,21 +76,29 @@
                     </div>
                     <div class="icons">
                         <i class="fas fa-angle-left" @click="handleClick()"></i>
+
+                        <!-- Search Message -->
                         <i class="fab fa-searchengin" @click="toggleSearchIcon()"></i>
                         <input type="text" placeholder="Cerca un messaggio" class="input-message" :class="{visible: searchIcon}" v-model="searchedMessage" @input="searchMessage()">
                         <i class="fas fa-paperclip"></i>
+
+                        <!-- Remove Chat -->
                         <i class="fa-solid fa-ellipsis-vertical" @click="toggleRemoveChat()"></i>
                         <div class="remove-chat" :class="{visible: removeChat}">
                             <p @click="removeThisChat(currentIndex)">Cancella chat</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Messages List -->
                 <ul class="messages" ref="messagesContainer">
                     <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
                         <div class="box" v-for="(message, i) in searchMessage(index)">
                             <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
+
+                                <!-- Delete message -->
                                 <i class="fas fa-angle-down" 
-                                @click="visibility(i)">
+                                @click="toggleMenu(i)">
                                 </i>
                                 <div class="menu" :class="{visible: i == messageIndex}">
                                     <p>message info</p>
@@ -97,6 +111,8 @@
                         </div>
                     </li>
                 </ul>
+
+                <!-- Send new message -->
                 <div class="text">
                     <i class="fa-regular fa-face-smile"></i>
                     <input type="text" 
@@ -110,8 +126,11 @@
         </div>
     </div>
 
+    <!-- Luxon -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js" integrity="sha512-dUlSLLkxslGILhPdCkALwk4szPhp3xmZIKFtlUD+O9Lslq41Aksmdt5OGqpomDoT4FsCUH70jQU8ezZHI3v1RQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Vue -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- JS -->
     <script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>

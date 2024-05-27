@@ -183,6 +183,28 @@ const { createApp } = Vue
     },
 
     methods: {
+
+        handleClick(i){
+            if(i >= 0){
+                this.currentIndex = i;
+                this.messageIndex = null;
+                this.searchedMessage = "";
+                this.searchIcon = false;
+                this.removeChat = false
+            }
+            
+            if (window.innerWidth <= 576){
+                if (this.displayLeft == true){
+                    this.displayLeft = false;
+                    this.displayRight = true;
+                } else {
+                    this.displayLeft = true;
+                    this.displayRight = false;
+                }
+            }
+        },
+
+        // Send new message
         addMessage(i){
             const time = luxon.DateTime.now().setLocale('it').toFormat('TT')
             if (this.newMessage){
@@ -217,6 +239,23 @@ const { createApp } = Vue
             }
         },
 
+        typing(){
+            if(!this.isTyping){
+                this.isTyping = true;
+            }
+
+            this.timeoutTyping = setTimeout(function(){
+                this.isTyping = false;
+            }, 1000);
+        },
+
+        // Automatic scroll
+        scrollToBottom(){
+            const container = this.$refs.messagesContainer;     // "$refs" contiene le referenze a elementi DOM o componenti figlio che hanno un attributo ref; è utile per accedere direttamente a elementi specifici nel DOM
+            container.scrollTop = container.scrollHeight;
+        },
+
+        // Search functions
         searchContacts(){
             if (this.searchedContacts){
                 return this.contacts.map((element) => {
@@ -246,14 +285,7 @@ const { createApp } = Vue
             }
         },
 
-        visibility(i){
-            if (this.messageIndex !== i){
-                this.messageIndex = i;
-            } else {
-                this.messageIndex = null;
-            }
-        },
-
+        // Delete functions
         deleteMessage(contactIndex, messageIndex){
             this.contacts[contactIndex].messages = this.contacts[contactIndex].messages.filter((_, i) => {
                 return i !== messageIndex;
@@ -262,53 +294,27 @@ const { createApp } = Vue
             this.messageIndex = null;
         },
 
-        handleClick(i){
-            if(i >= 0){
-                this.currentIndex = i;
-                this.messageIndex = null;
-                this.searchedMessage = "";
-                this.searchIcon = false;
-                this.removeChat = false
-            }
-            
-            if (window.innerWidth <= 576){
-                if (this.displayLeft == true){
-                    this.displayLeft = false;
-                    this.displayRight = true;
-                } else {
-                    this.displayLeft = true;
-                    this.displayRight = false;
-                }
-            }
-        },
-
-        typing(){
-            if(!this.isTyping){
-                this.isTyping = true;
-            }
-
-            this.timeoutTyping = setTimeout(function(){
-                this.isTyping = false;
-            }, 1000);
-        },
-
-        toggleSearchIcon(){
-            this.searchIcon = !this.searchIcon
-        },
-
-        toggleRemoveChat(){
-            this.removeChat = !this.removeChat
-        },
-
         removeThisChat(index){
             this.contacts = this.contacts.filter((_, i) => {
                 return i !== index;
             })  
         },
 
-        scrollToBottom(){
-            const container = this.$refs.messagesContainer;     // "$refs" contiene le referenze a elementi DOM o componenti figlio che hanno un attributo ref; è utile per accedere direttamente a elementi specifici nel DOM
-            container.scrollTop = container.scrollHeight;
+        // Toggle functions
+        toggleSearchIcon(){
+            this.searchIcon = !this.searchIcon
+        },
+
+        toggleMenu(i){
+            if (this.messageIndex !== i){
+                this.messageIndex = i;
+            } else {
+                this.messageIndex = null;
+            }
+        },
+
+        toggleRemoveChat(){
+            this.removeChat = !this.removeChat
         }
     }
   }).mount('#app')
