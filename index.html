@@ -101,8 +101,8 @@
 
                 <!-- Messages List -->
                 <ul class="messages" ref="messagesContainer">
-                    <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
-                        <div class="box" v-for="(message, i) in searchMessage(index)">
+                    <li>
+                        <div class="box" v-for="(message, i) in searchMessage(currentIndex)">
                             <div class="message" :class="message.status">
 
                                 <!-- Delete message -->
@@ -111,11 +111,11 @@
                                 </i>
                                 <div class="menu" :class="{visible: i == messageIndex}">
                                     <p>message info</p>
-                                    <p @click="deleteMessage(index, i)">delete message</p>
+                                    <p @click="deleteMessage(currentIndex, i)">delete message</p>
                                 </div>
                                 <p>{{ message.message }}</p>
-                                <div class="time" v-if="contacts[index].messages[i].date.length > 5">{{ message.date.split(" ")[1].slice(0, 5)}}</div>
-                                <div class="time" v-else="contacts[index].messages[i].date.length = 5">{{ message.date }}</div>
+                                <div class="time" v-if="message.date.length > 5">{{ message.date.split(" ")[1].slice(0, 5)}}</div>
+                                <div class="time" v-else="message.date.length = 5">{{ message.date }}</div>
                             </div>
                         </div>
                     </li>
