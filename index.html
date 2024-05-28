@@ -115,7 +115,7 @@
                                 </div>
                                 <p>{{ message.message }}</p>
                                 <div class="time" v-if="message.date.length > 5">{{ message.date.split(" ")[1].slice(0, 5)}}</div>
-                                <div class="time" v-else="message.date.length = 5">{{ message.date }}</div>
+                                <div class="time" v-else="message.date.length == 5">{{ message.date }}</div>
                             </div>
                         </div>
                     </li>
