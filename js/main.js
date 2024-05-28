@@ -169,20 +169,20 @@ const contacts = [
   createApp({
     data() {
       return {
-        contacts : contacts,
-        answers: answers,
+        contacts,
+        answers,
         currentIndex: 0,
-        newMessage: "",
+        message: "",
         searchedContacts: "",
         messageIndex: null,
         isVisible: false,
         displayLeft: true,
-        displayRight: false,
         isTyping: false,
         timeoutTyping: null,
         searchIcon: false,
         searchedMessage: "",
-        removeChat: false
+        removeChat: false,
+        currentTimeOut: null
       }
     },
 
@@ -198,32 +198,29 @@ const contacts = [
             }
             
             if (window.innerWidth <= 576){
-                if (this.displayLeft == true){
-                    this.displayLeft = false;
-                    this.displayRight = true;
-                } else {
-                    this.displayLeft = true;
-                    this.displayRight = false;
-                }
+                this.displayLeft = !this.displayLeft
             }
         },
 
         // Send new message
-        handleNewMessage(i){
-            const time = luxon.DateTime.now().setLocale('it').toFormat('TT')
-            if (this.newMessage){    
+        handleNewMessage(){
 
-                this.addMessage(i, time);
-                this.newMessage = "";
+            const currentMessage = this.message.trim();
+            if (currentMessage){    
+
+                clearTimeout(this.currentTimeOut); // se scrivo un altro messaggio prima della fine del timeOut "ammazzo" il timeOut precedente e lo faccio ripartire (così se mando 5 messaggi in un secondo non ottengo 5 risposte, solo 1)
+
+                this.addMessage(this.newMessage(currentMessage, "sent"));
+                this.message = "";
 
                 this.$nextTick(this.scrollToBottom); // "this.$nextTick" assicura che il metodo scrollToBottom() venga eseguito solo dopo che il DOM è stato aggiornato con il nuovo messaggio
     
                 this.typing();
 
-                setTimeout(() => {
+                this.currentTimeOut = setTimeout(() => {
 
                     const num = Math.floor(Math.random() * 6);
-                    this.receiveMessage(i, time, num);
+                    this.addMessage(this.newMessage(this.answers[num], "received"));
 
                     this.$nextTick(this.scrollToBottom);
 
@@ -233,20 +230,17 @@ const contacts = [
             }
         },
 
-        addMessage(i, time){
-            return this.contacts[i].messages.push({
-                date: time,
-                message: this.newMessage,
-                status: 'sent'
-            })
+        addMessage(message){
+            let messages = this.contacts[this.currentIndex].messages
+            this.contacts[this.currentIndex].messages = [...messages, message]
         },
 
-        receiveMessage(i, time, num){
-            return this.contacts[i].messages.push({
-                date: time,
-                message: this.answers[num],
-                status: 'received'
-            })
+        newMessage(message, status){
+            return {
+                date: luxon.DateTime.now().setLocale('it').toFormat('T'),
+                message,
+                status
+            }
         },
 
         typing(){
@@ -269,7 +263,7 @@ const contacts = [
 
         // Search functions
         searchContacts(){
-            if (this.searchedContacts){
+            if (this.searchedContacts.trim()){
                 return this.contacts.map((element) => {
                     if(element.name.toLowerCase().includes(this.searchedContacts.toLowerCase())){
                         return {...element}
@@ -280,7 +274,6 @@ const contacts = [
             } else {
                 return this.contacts;
             }
-            
         },
 
         searchMessage(i){
@@ -320,7 +313,6 @@ const contacts = [
                     return i !== index;
                 })
             } 
-            
             this.toggleRemoveChat()
         },
 

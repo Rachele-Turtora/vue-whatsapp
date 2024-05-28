@@ -13,7 +13,7 @@
 <body>
     <div id="app" v-cloak>
         <div class="container">
-            <div class="col-left" :class="{'col-left display-left': displayLeft}">
+            <div class="col-left" :class="{'display-left': displayLeft}">
                 <div class="me">
                     <div class="img">
                         <img src="./img/avatar_io.jpg" alt="avatar">
@@ -45,17 +45,18 @@
                 <!-- Contacts List -->
                 <ul class="friends" v-if="currentIndex >= 0">
                     <li v-for="(contact, index) in searchContacts()" 
+                    :key="`contact-${index}`" 
                     @click="handleClick(index)" 
-                    v-show="contact.visible" :key="index">
+                    v-show="contact.visible">
                         <div class="friend" v-show="currentIndex >= 0">
                             <div class="img">
-                                <img :src="contact.avatar" alt="avatar">
+                                <img :src="contact.avatar" :alt="contact.name">
                             </div>
                             <div class="content">
                                 <p class="name"> {{ contact.name }}</p>
                                 <p class="stato" v-if="contact.messages.length !== 0"> {{ contact.messages[contact.messages.length - 1].message}} </p> 
-                                <div class="last-access" v-if="contact.messages.length !== 0 && contact.messages[contact.messages.length - 1].date.length > 8"> {{contact.messages[contact.messages.length - 1].date.split(" ")[1]}} </div>
-                                <div class="last-access" v-else-if="contact.messages.length !== 0 && contact.messages[contact.messages.length - 1].date.length === 8"> {{contact.messages[contact.messages.length - 1].date}} </div>
+                                <div class="last-access" v-if="contact.messages.length !== 0 && contact.messages[contact.messages.length - 1].date.length > 5"> {{contact.messages[contact.messages.length - 1].date.split(" ")[1].slice(0, 5)}} </div>
+                                <div class="last-access" v-else-if="contact.messages.length !== 0 && contact.messages[contact.messages.length - 1].date.length === 5"> {{contact.messages[contact.messages.length - 1].date}} </div>
                             </div>
                         </div>
                     </li>
@@ -64,20 +65,20 @@
                     <p>Nessun contatto disponibile</p>
                 </div>
             </div>
-            <div class="col-right" :class="{'col-right display-right': displayRight}" 
+            <div class="col-right" :class="{'display-right': !displayLeft}" 
             v-if="currentIndex >= 0">
 
                 <!-- Contact Info -->
                 <div class="info">
                     <div class="info-left">
                         <div class="img">
-                            <img :src="contacts[currentIndex].avatar" alt="avatar">
+                            <img :src="contacts[currentIndex].avatar" :alt="contacts[currentIndex].name">
                         </div>
                         <div class="content">
                             <p class="name"> {{contacts[currentIndex].name}} </p>
                             <p class="access" v-if="isTyping">Sta scrivendo...</p>
                             <p class="access" v-else>
-                                <span class="access" v-if="contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.length > 8">Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.split(" ")[1]}} </span>
+                                <span class="access" v-if="contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.length > 8">Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.split(" ")[1].slice(0, 5)}} </span>
                                 <span class="access" v-else>Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date}} </span>
                             </p>
                         </div>
@@ -102,7 +103,7 @@
                 <ul class="messages" ref="messagesContainer">
                     <li v-for="(contact, index) in contacts" v-show="currentIndex == index">
                         <div class="box" v-for="(message, i) in searchMessage(index)">
-                            <div class="message" :class="{green: message.status == 'sent', white: message.status == 'received'}">
+                            <div class="message" :class="message.status">
 
                                 <!-- Delete message -->
                                 <i class="fas fa-angle-down" 
@@ -113,8 +114,8 @@
                                     <p @click="deleteMessage(index, i)">delete message</p>
                                 </div>
                                 <p>{{ message.message }}</p>
-                                <div class="time" v-if="contacts[index].messages[i].date.length > 8">{{ message.date.split(" ")[1] }}</div>
-                                <div class="time" v-else="contacts[index].messages[i].date.length = 8">{{ message.date }}</div>
+                                <div class="time" v-if="contacts[index].messages[i].date.length > 5">{{ message.date.split(" ")[1].slice(0, 5)}}</div>
+                                <div class="time" v-else="contacts[index].messages[i].date.length = 5">{{ message.date }}</div>
                             </div>
                         </div>
                     </li>
@@ -125,8 +126,8 @@
                     <i class="fa-regular fa-face-smile"></i>
                     <input type="text" 
                     placeholder="Scrivi un messaggio" 
-                    v-model="newMessage" 
-                    @keyup.enter="handleNewMessage(currentIndex)">
+                    v-model="message" 
+                    @keyup.enter="handleNewMessage()">
                     <i class="fas fa-microphone"></i>
                 </div>
             </div>

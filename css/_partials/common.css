@@ -130,12 +130,12 @@ input{
     justify-content: flex-end;
 }
 
-.green{
+.sent{
     background-color: #d4f9bb;
     margin-right: 30px;
 }
 
-.white{
+.received{
     background-color: white;
     margin-right: auto;
     margin-left: 30px;
