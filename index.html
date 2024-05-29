@@ -78,8 +78,15 @@
                             <p class="name"> {{contacts[currentIndex].name}} </p>
                             <p class="access" v-if="isTyping">Sta scrivendo...</p>
                             <p class="access" v-else>
-                                <span class="access" v-if="contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.length > 8">Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.split(" ")[1].slice(0, 5)}} </span>
-                                <span class="access" v-else>Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date}} </span>
+                                <span class="access" v-if="contacts[currentIndex].messages.length && contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.length > 8">
+                                    Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date.split(" ")[1].slice(0, 5)}}
+                                </span>
+                                <span class="access" v-else-if="contacts[currentIndex].messages.length">
+                                    Ultimo accesso oggi alle {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date}} 
+                                </span>
+                                <span class="access" v-else>
+                                    Nessun messaggio
+                                </span>
                             </p>
                         </div>
                     </div>
